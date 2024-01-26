@@ -145,7 +145,7 @@ button:focus-visible {
   }
 }
 
-.loading::before {
+/* .loading::before {
   content: '';
   position: absolute;
   margin: auto;
@@ -170,13 +170,10 @@ button:focus-visible {
   right: 0;
   bottom: 0;
   left: 0;
-  /* width: 100vh;
-  height: 100vw; */
   background-color: rgba(255, 255, 255, 0.87);
   z-index: 2000;
 }
 
-/*  转转转动画 */
 @keyframes circle {
   0% {
     transform: rotate(0);
@@ -184,4 +181,4 @@ button:focus-visible {
   100% {
     transform: rotate(360deg);
   }
-}
+} */

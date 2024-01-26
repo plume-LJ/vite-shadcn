@@ -5,24 +5,27 @@ import {
   Route,
   Link,
   Outlet,
-  useNavigation,
 } from "react-router-dom";
 import React, { Suspense } from "react";
 // import ContactForm from "./pages/concat";
-import { action as destroyAction } from "./pages/destory";
-import ContactRoot from "@/pages/concat/root";
-import Contact from "./pages/concat";
+import { action as destroyAction } from "./pages/concat/destory";
+import ContactRoot, {
+  loader as rootLoader,
+  action as rootAction,
+} from "@/pages/concat/root";
+import Contact, {
+  loader as contactLoader,
+  action as contactAction,
+} from "./pages/concat";
 import ErrorPage from "./pages/error-page";
+import EditContact, { action as editAction } from "./pages/concat/edit";
+import ContactHome from "./pages/concat/home";
+import "@/pages/concat/index.css";
 
 const HomeRute = React.lazy(() => import("./App"));
 
 const Layout = () => {
-  const navigation = useNavigation();
-  return (
-    <div className={`${navigation.state === "loading" ? "loading" : ""}`}>
-      <Outlet />
-    </div>
-  );
+  return <Outlet />;
 };
 
 // const NotFound = () => {
@@ -55,8 +58,29 @@ const router = createBrowserRouter(
         path="contacts"
         element={<ContactRoot />}
         errorElement={<ErrorPage />}
+        loader={rootLoader}
+        action={rootAction}
       >
-        <Route path=":contactId" element={<Contact />} />
+        <Route errorElement={<ErrorPage />}>
+          <Route index element={<ContactHome />} />
+          <Route
+            path=":contactId"
+            element={<Contact />}
+            loader={contactLoader}
+            action={contactAction}
+          />
+          <Route
+            path=":contactId/edit"
+            element={<EditContact />}
+            loader={contactLoader}
+            action={editAction}
+          />
+          <Route
+            path=":contactId/destroy"
+            action={destroyAction}
+            errorElement={<div>Oops! There was an error.</div>}
+          />
+        </Route>
       </Route>
       {/* <Route path="*" element={<NotFound />} /> */}
     </Route>

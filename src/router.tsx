@@ -7,6 +7,7 @@ import {
   Outlet,
   redirect,
   useNavigate,
+  ScrollRestoration,
   type RouteObject,
 } from "react-router-dom";
 import React, { Suspense } from "react";
@@ -28,7 +29,12 @@ import "@/pages/concat/index.css";
 const HomeRute = React.lazy(() => import("./App"));
 
 const Layout = () => {
-  return <Outlet />;
+  return (
+    <>
+      <Outlet />
+      <ScrollRestoration getKey={(location) => location.key} />
+    </>
+  );
 };
 
 // const NotFound = () => {

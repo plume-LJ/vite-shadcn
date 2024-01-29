@@ -7,7 +7,8 @@ import {
   Form,
   useNavigation,
   LoaderFunctionArgs,
-  useSubmit
+  useSubmit,
+  Link
 } from "react-router-dom";
 
 import { getContacts, createContact, type Contact } from "@/contacts";
@@ -116,6 +117,7 @@ export default function Root() {
       >
         <Outlet />
       </div>
+      <Link to='/'>Index</Link>
     </div>
   );
 }

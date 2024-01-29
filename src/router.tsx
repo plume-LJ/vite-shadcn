@@ -25,6 +25,9 @@ import ErrorPage from "./pages/error-page";
 import EditContact, { action as editAction } from "./pages/concat/edit";
 import ContactHome from "./pages/concat/home";
 import "@/pages/concat/index.css";
+import ImportantForm, {
+  action as ImportantFormAction,
+} from "./pages/form/important";
 
 const HomeRute = React.lazy(() => import("./App"));
 
@@ -76,6 +79,7 @@ const AppRoutes: RouteObject[] = [
             <Link to="/">Index</Link>
             <Link to="/home">Home</Link>
             <Link to="/contacts">Concat</Link>
+            <Link to="/form">Form</Link>
           </div>
         ),
       },
@@ -141,6 +145,7 @@ const AppRoutes: RouteObject[] = [
           },
         ],
       },
+      { path: "form", element: <ImportantForm />, action: ImportantFormAction },
     ],
   },
 ];

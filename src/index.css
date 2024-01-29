@@ -145,7 +145,7 @@ button:focus-visible {
   }
 }
 
-/* .loading::before {
+.root-loading::before {
   content: '';
   position: absolute;
   margin: auto;
@@ -162,7 +162,8 @@ button:focus-visible {
   animation: circle infinite 0.75s linear;
   z-index: 2001;
 }
-.loading::after {
+
+.root-loading::after {
   content: '';
   position: absolute;
   margin: auto;
@@ -178,7 +179,8 @@ button:focus-visible {
   0% {
     transform: rotate(0);
   }
+
   100% {
     transform: rotate(360deg);
   }
-} */
+}

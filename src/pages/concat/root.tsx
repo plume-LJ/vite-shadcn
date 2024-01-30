@@ -8,7 +8,8 @@ import {
   useNavigation,
   LoaderFunctionArgs,
   useSubmit,
-  Link
+  Link,
+  useSearchParams
 } from "react-router-dom";
 
 import { getContacts, createContact, type Contact } from "@/contacts";
@@ -26,10 +27,20 @@ export async function loader({ request }: LoaderFunctionArgs<{q: string}>) {
   return { contacts, q };
 }
 
+export type RootLoaderData = {
+  contacts: Contact[];
+  q: string;
+};
+
 export default function Root() {
-  const { contacts, q } = useLoaderData() as { contacts: Contact[], q: string };
+  const { contacts, q } = useLoaderData() as RootLoaderData;
   const navigation = useNavigation();
+  console.log(navigation)
   const submit =useSubmit()
+  // @ts-expect-error unused
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [searchParams, setSearchParams] = useSearchParams();
+  console.log(searchParams, navigation.location?.search)
 
   const searching =
     navigation.location &&
@@ -117,7 +128,7 @@ export default function Root() {
       >
         <Outlet />
       </div>
-      <Link to='/'>Index</Link>
+      <Link to='/about'>Index</Link>
     </div>
   );
 }

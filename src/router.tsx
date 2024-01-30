@@ -8,7 +8,11 @@ import {
   redirect,
   useNavigate,
   ScrollRestoration,
+  useRouteError,
+  redirectDocument,
+  isRouteErrorResponse,
   type RouteObject,
+  // type ErrorResponse,
 } from "react-router-dom";
 import React, { Suspense } from "react";
 // import ContactForm from "./pages/concat";
@@ -16,6 +20,7 @@ import { action as destroyAction } from "./pages/concat/destory";
 import ContactRoot, {
   loader as rootLoader,
   action as rootAction,
+  RootLoaderData,
 } from "@/pages/concat/root";
 import Contact, {
   loader as contactLoader,
@@ -28,6 +33,16 @@ import "@/pages/concat/index.css";
 import ImportantForm, {
   action as ImportantFormAction,
 } from "./pages/form/important";
+import CardTag, {
+  action as tagAction,
+  loader as tagLoader,
+} from "./pages/form/fetcher";
+import Tasks, {
+  loader as taskLoader,
+  action as taskAction,
+} from "./pages/form/fetchers";
+import DeleteButton, { action as formAction } from "./pages/form/formAction";
+import Breadcrumbs from "./pages/form/breadcrumb";
 
 const HomeRute = React.lazy(() => import("./App"));
 
@@ -35,6 +50,8 @@ const Layout = () => {
   return (
     <>
       <Outlet />
+      <Breadcrumbs />
+
       <ScrollRestoration getKey={(location) => location.key} />
     </>
   );
@@ -58,6 +75,16 @@ const Login = () => {
   );
 };
 
+function ErrorBoundary() {
+  const error = useRouteError();
+
+  console.error(error);
+  if (isRouteErrorResponse(error)) {
+    return <div>{error.data}</div>;
+  }
+  return <div>Error</div>;
+}
+
 const AppRoutes: RouteObject[] = [
   {
     path: "/",
@@ -80,6 +107,9 @@ const AppRoutes: RouteObject[] = [
             <Link to="/home">Home</Link>
             <Link to="/contacts">Concat</Link>
             <Link to="/form">Form</Link>
+            <Link to="/tag">Tag</Link>
+            <Link to="/tasks">Tasks</Link>
+            <Link to="/error">Error</Link>
           </div>
         ),
       },
@@ -103,6 +133,7 @@ const AppRoutes: RouteObject[] = [
           const isLogin = sessionStorage.getItem("isLogin");
           console.log(args, isLogin);
           if (!isLogin) {
+            return redirectDocument("/login");
             return redirect(`/login`);
           }
           return null;
@@ -114,6 +145,12 @@ const AppRoutes: RouteObject[] = [
             errorElement: <ErrorPage />,
             loader: rootLoader,
             action: rootAction,
+            id: "contacts",
+            handle: {
+              crumb: (data: RootLoaderData) => (
+                <Link to="/messages">Messages/{data.contacts.length}</Link>
+              ),
+            },
             children: [
               {
                 errorElement: <ErrorPage />,
@@ -146,6 +183,31 @@ const AppRoutes: RouteObject[] = [
         ],
       },
       { path: "form", element: <ImportantForm />, action: ImportantFormAction },
+      {
+        path: "tag",
+        element: <CardTag />,
+        action: tagAction,
+        loader: tagLoader,
+      },
+      {
+        path: "tasks",
+        element: <Tasks />,
+        loader: taskLoader,
+        action: taskAction,
+      },
+      {
+        path: "error",
+        element: <div>Oops! There was an error.</div>,
+        action: () => {
+          throw new Response("Error", { status: 400 });
+        },
+        loader: () => {
+          throw new Response("Error", { status: 400 });
+        },
+        errorElement: <ErrorBoundary />,
+      },
+      { path: "/projects/:projectId/tasks/:taskId", action: taskAction },
+      { path: "/form/action", element: <DeleteButton />, action: formAction },
     ],
   },
 ];

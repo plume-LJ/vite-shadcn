@@ -5,6 +5,7 @@ import {
   Await,
   useAsyncValue,
   useAsyncError,
+  useNavigation,
   defer,
 } from "react-router-dom";
 import { Skeleton } from "./components/ui/skeleton";
@@ -19,6 +20,8 @@ export async function loader() {
 
 export function Component() {
   const { data } = useLoaderData() as { data: Promise<string> };
+  const navigation = useNavigation();
+  console.log(navigation)
   console.log(data)
   return (
     <div>

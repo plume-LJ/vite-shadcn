@@ -8,6 +8,7 @@
 
     /* Bundler mode */
     "moduleResolution": "bundler",
+    "esModuleInterop": true,
     "allowImportingTsExtensions": true,
     "resolveJsonModule": true,
     "isolatedModules": true,
@@ -24,6 +25,16 @@
     "paths": {
       "@/*": ["src/*"]
     }
+  },
+  "ts-node": {
+    // "compilerOptions": {
+    //   "module": "commonjs",
+    //   "allowImportingTsExtensions": true,
+
+    // },
+    // "transpileOnly": true,
+    // "files": true,
+    "esm": true
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]

@@ -6,6 +6,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { type Contact, updateContact } from "@/contacts";
+import DeleteButton from "../form/formAction";
 
 export async function action({
   request,
@@ -66,6 +67,7 @@ export default function EditContact() {
       </label>
       <p>
         <button type="submit">Save</button>
+        <DeleteButton/>
         <button
           type="button"
           onClick={() => {

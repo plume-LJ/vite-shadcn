@@ -5,6 +5,8 @@ import {
   ActionFunctionArgs,
   useNavigate,
 } from "react-router-dom";
+import invariant from "tiny-invariant";
+
 import { type Contact, updateContact } from "@/contacts";
 import DeleteButton from "../form/formAction";
 import { loader } from ".";
@@ -12,8 +14,8 @@ import { loader } from ".";
 export async function action({
   request,
   params,
-}: ActionFunctionArgs<{ contactId: string }>) {
-  console.log(request, params);
+}: ActionFunctionArgs) {
+  invariant(params.contactId, "contactId not found");
   const formData = await request.formData();
   const updates = Object.fromEntries(formData) as unknown as Contact;
   await updateContact(params.contactId!, updates);

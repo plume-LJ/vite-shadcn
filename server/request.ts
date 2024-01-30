@@ -1,4 +1,4 @@
-import {Request} from 'express'
+import { type Request } from "express";
 
 export default function createFetchRequest(req: Request) {
   const origin = `${req.protocol}://${req.get("host")}`;
@@ -26,7 +26,7 @@ export default function createFetchRequest(req: Request) {
     method: req.method,
     headers,
     signal: controller.signal,
-    body: null
+    body: null,
   };
 
   if (req.method !== "GET" && req.method !== "HEAD") {

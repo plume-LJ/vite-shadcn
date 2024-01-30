@@ -1,6 +1,7 @@
 // const React = require("react");
 // const { json, useLoaderData } = require("react-router-dom");
 import { json, useLoaderData } from "react-router-dom";
+import React from "react";
 
 const routes = [
   {

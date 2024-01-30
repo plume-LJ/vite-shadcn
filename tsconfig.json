@@ -27,13 +27,13 @@
     }
   },
   "ts-node": {
-    // "compilerOptions": {
-    //   "module": "commonjs",
-    //   "allowImportingTsExtensions": true,
+    "compilerOptions": {
+      "module": "commonjs",
+      "allowImportingTsExtensions": true,
 
-    // },
-    // "transpileOnly": true,
-    // "files": true,
+    },
+    "transpileOnly": true,
+    "files": true,
     "esm": true
   },
   "include": ["src"],

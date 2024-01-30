@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { type Contact, updateContact } from "@/contacts";
 import DeleteButton from "../form/formAction";
+import { loader } from ".";
 
 export async function action({
   request,
@@ -20,7 +21,7 @@ export async function action({
 }
 
 export default function EditContact() {
-  const { contact } = useLoaderData() as { contact: Contact };
+  const { contact } = useLoaderData() as LoaderAction<typeof loader>;
   const navigate = useNavigate();
 
   return (
